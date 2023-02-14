@@ -1,20 +1,14 @@
 <?php
-
 require __DIR__.'/vendor/autoload.php';
+include  __DIR__ .'/config/routes.php';
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\Response;
-
-$response = new Response();
+use Symfony\Component\Routing\RequestContext;
+use Symfony\Component\Routing\Matcher\UrlMatcher;
+use ModernFramework\Application;
 $request = Request::createFromGlobals();
-$path = $request->getPathInfo();
-$route = ['/hello' => 'hello.php', '/hai' => 'hai.php', '/greet' => 'greeting.php'];
-if (isset($route[$path])) {
-include $route[$path];
-}else{
-    $response = new Response();
-    // $response -> setContent(sprintf("Not found"));
-    $response -> setStatusCode(Response::HTTP_NOT_FOUND);
-}
-
-$response -> send();
-
+$context = new RequestContext();
+$context->fromRequest($request);
+$kernel = new Application();
+$response = $kernel->handle($request);
+$matcher = new UrlMatcher($routes, $context);
+$response->send();

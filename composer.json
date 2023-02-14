@@ -1,6 +1,12 @@
 {
-    "require": {
-        "symfony/http-foundation": "^6.2",
-        "symfony/routing": "^6.2"
+  "require": {
+    "symfony/http-foundation": "^6.2",
+    "symfony/routing": "^6.2",
+    "symfony/http-kernel": "^6.2"
+  },
+  "autoload": {
+    "psr-4": {
+      "ModernFramework\\": "src/"
     }
+  }
 }
